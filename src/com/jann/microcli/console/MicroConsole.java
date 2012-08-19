@@ -250,13 +250,14 @@ public class MicroConsole extends Activity
                 byte[] writeBuf = (byte[]) msg.obj;
                 // construct a string from the buffer
                 String writeMessage = new String(writeBuf);
-                mConversationArrayAdapter.add("Me:  " + writeMessage);
+                mConversationArrayAdapter.add("Me:  " + writeMessage.replaceAll("\\r\\n", ""));
                 break;
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
                 // construct a string from the valid bytes in the buffer
                 String readMessage = new String(readBuf, 0, msg.arg1);
-                mConversationArrayAdapter.add("Dev:  " + readMessage);
+                if(readMessage.length()>0)
+                	mConversationArrayAdapter.add("Dev:  " + readMessage);
                 break;
             case MESSAGE_TOAST:
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
