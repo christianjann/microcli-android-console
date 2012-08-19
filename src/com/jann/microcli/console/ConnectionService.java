@@ -116,6 +116,14 @@ public class ConnectionService
                     if ((line = buf.readLine()) != null)
                         mHandler.obtainMessage(MicroConsole.MESSAGE_READ,
                                                line.length(), -1, line.getBytes()).sendToTarget();
+                    try
+                    {
+                        Thread.sleep(50);
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        //break;
+                    }
                 }
             }
             catch (IOException e)
