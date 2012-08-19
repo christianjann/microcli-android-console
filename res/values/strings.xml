@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MicroCLI Console</string>
+    <string name="send">Send</string>
+    
+    <!--  Menu -->
+    <string name="disable_toggle_leds">disable TOGGLE_LEDS</string>
+    <string name="toggle_led3">toggle LED3</string>
+    <string name="enable_toggle_leds">enable TOGGLE_LEDS</string>
+</resources>

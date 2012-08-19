@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/toggle_led3" android:title="@string/toggle_led3"></item>
+	<item android:id="@+id/disable_toggle_leds" android:title="@string/disable_toggle_leds"></item>
+	<item android:id="@+id/enable_toggle_leds" android:title="@string/enable_toggle_leds"></item>
+</menu>
