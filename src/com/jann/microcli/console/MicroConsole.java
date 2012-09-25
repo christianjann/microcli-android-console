@@ -1,6 +1,6 @@
 /*
  * This file is part of MicroCLI.
- * 
+ *
  * Copyright (C) 2012 Christian Jann <christian.jann@ymail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,7 +31,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,7 +57,6 @@ public class MicroConsole extends Activity
     public static final String TOAST = "toast";
 
     // Layout Views
-    private TextView mTitle;
     private ListView    mConsoleView;
     private EditText    mOutEditText;
     private Button      mSendButton;
@@ -76,14 +75,15 @@ public class MicroConsole extends Activity
         if (D) Log.e(TAG, "+++ ON CREATE +++");
 
         // Set up the window layout
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.main);
 
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-        // Set up the custom title
-        mTitle = (TextView) findViewById(R.id.title_left_text);
-        mTitle.setText(R.string.app_name);
-        mTitle = (TextView) findViewById(R.id.title_right_text);
+        // Disable the restriction for using Networking on main thread
+        // http://stackoverflow.com/questions/12529994/networking-issues-on-honeycomb-and-higher
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
     }
 
     public void onStart()
@@ -201,7 +201,6 @@ public class MicroConsole extends Activity
         }
     };
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (D) Log.d(TAG, "onActivityResult " + resultCode);
@@ -256,8 +255,8 @@ public class MicroConsole extends Activity
                 byte[] readBuf = (byte[]) msg.obj;
                 // construct a string from the valid bytes in the buffer
                 String readMessage = new String(readBuf, 0, msg.arg1);
-                if(readMessage.length()>0)
-                	mConversationArrayAdapter.add("Dev:  " + readMessage);
+                if (readMessage.length() > 0)
+                    mConversationArrayAdapter.add("Dev:  " + readMessage);
                 break;
             case MESSAGE_TOAST:
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),

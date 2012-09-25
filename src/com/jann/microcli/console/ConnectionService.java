@@ -1,6 +1,6 @@
 /*
  * This file is part of MicroCLI.
- * 
+ *
  * Copyright (C) 2012 Christian Jann <christian.jann@ymail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
